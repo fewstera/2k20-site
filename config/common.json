@@ -1,0 +1,10 @@
+{
+  "cpu": 64,
+  "memory": 256,
+  "port": 11080,
+  "common_application_environment": {
+    "PORT": 11080,
+    "NODE_ENV": "production",
+    "COMPONENT_NAME": "2k20-site"
+  }
+}

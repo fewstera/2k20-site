@@ -1,0 +1,49 @@
+version: '3.4'
+services:
+  frontend:
+    build:
+      context: .
+      target: dev
+    environment:
+      - PORT=11080
+      - NODE_ENV=development
+      - ENV_NAME=local
+      - LOG_LEVEL=debug
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./Makefile:/app/Makefile
+      - ./frontend/.eslintrc.json:/app/frontend/.eslintrc.json
+      - ./frontend/config-overrides.js:/app/frontend/config-overrides.js
+      - ./frontend/package.json:/app/frontend/package.json
+      - ./frontend/public:/app/frontend/public
+      - ./frontend/src:/app/frontend/src:cached
+      - ./frontend/tsconfig.json:/app/frontend/tsconfig.json
+      - ./frontend/yarn.lock:/app/frontend/yarn.lock
+      - ./.eslintrc.json:/app/.eslintrc.json
+    command: yarn --cwd ./frontend start
+
+  server:
+    build:
+      context: .
+      target: dev
+    environment:
+      - PORT=11080
+      - NODE_ENV=development
+      - ENV_NAME=local
+      - LOG_LEVEL=debug
+      - STATSD_ENABLED=false
+      - AWS_ACCESS_KEY_ID=local
+      - AWS_SECRET_ACCESS_KEY=local
+      - AWS_REGION=local
+    volumes:
+      - ./elasticsearch:/app/elasticsearch
+      - ./Makefile:/app/Makefile
+      - ./server/jest.config.js:/app/server/jest.config.js
+      - ./server/package.json:/app/server/package.json
+      - ./server/src:/app/server/src
+      - ./server/tsconfig.json:/app/server/tsconfig.json
+      - ./server/typings:/app/server/typings
+      - ./server/yarn.lock:/app/server/yarn.lock
+      - ./server/scripts:/app/server/scripts
+      - ./.eslintrc.json:/app/.eslintrc.json
+    command: yarn --cwd ./server start

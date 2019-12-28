@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  frontend:
+    expose:
+      - 11080
+    ports:
+      - '11080:11080'
+
+  server:
+    expose:
+      - 11080
