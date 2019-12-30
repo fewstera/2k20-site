@@ -40,7 +40,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container pt-3">
       <h1>NYE 2k20 hat</h1>
       <p>Use the form below to send a message to be displayed on the NYE 2k20 hat.</p>
       {isSubmitting && (
