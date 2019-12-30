@@ -62,8 +62,3 @@ variable "desired_count" {
   description = "The number of instances of the task definition to place and keep running."
   default     = "3"
 }
-
-variable "elasticsearch_domain_arn" {
-  type        = "string"
-  description = "The Amazon Resource Name for the Elasticsearch Domain"
-}

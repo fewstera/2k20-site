@@ -4,7 +4,7 @@
     "allowJs": true,
     "esModuleInterop": true,
     "module": "commonjs",
-    "outDir": "../dist",
+    "outDir": "../dist/server",
     "sourceMap": true,
     "target": "ES2017",
     "typeRoots": ["./node_modules/@types", "./typings"]

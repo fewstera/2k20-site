@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "build": "PUBLIC_URL=/stringer react-scripts build",
+    "build": "PUBLIC_URL=/ react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext ts,tsx,js ./src"

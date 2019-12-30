@@ -5,13 +5,16 @@ module "ecs_service" {
   platform_config                = "${var.platform_config}"
   release                        = "${var.release}"
   common_application_environment = "${var.common_application_environment}"
-  application_environment        = "${var.application_environment}"
-  secrets                        = "${var.secrets}"
-  ecs_cluster                    = "${var.ecs_cluster}"
-  port                           = "${var.port}"
-  cpu                            = "${var.cpu}"
-  memory                         = "${var.memory}"
-  target_group_arn               = "${var.target_group_arn}"
+  application_environment = "${merge(var.application_environment, map(
+    "DYNAMODB_MESSAGE_TABLE", "${aws_dynamodb_table.messages.id}"
+  ))}"
+  secrets          = "${var.secrets}"
+  ecs_cluster      = "${var.ecs_cluster}"
+  port             = "${var.port}"
+  cpu              = "${var.cpu}"
+  memory           = "${var.memory}"
+  desired_count    = "1"
+  target_group_arn = "${var.target_group_arn}"
   task_role_policy = <<END
 {
   "Version": "2012-10-17",
@@ -19,11 +22,30 @@ module "ecs_service" {
     {
       "Effect": "Allow",
       "Action": [
-        "es:*"
+        "dynamodb:*"
       ],
-      "Resource": "${var.elasticsearch_domain_arn}"
+      "Resource": [
+        "${aws_dynamodb_table.messages.arn}"
+      ]
     }
   ]
 }
 END
+}
+
+resource "aws_dynamodb_table" "messages" {
+  name         = "${var.env}-2k20-messages"
+  hash_key     = "isPurged"
+  range_key    = "timestamp"
+  billing_mode = "PAY_PER_REQUEST"
+
+  attribute {
+    name = "isPurged"
+    type = "S"
+  }
+
+  attribute {
+    name = "timestamp"
+    type = "N"
+  }
 }
