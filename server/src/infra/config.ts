@@ -6,6 +6,11 @@ export type Config = convict.Config<{
   logLevel: string
   nodeEnv: string
   port: string
+  dynamodb: {
+    endpoint: string
+    region: string
+    table: string
+  }
 }>
 
 export const config = convict({
@@ -38,6 +43,26 @@ export const config = convict({
     format: 'port',
     env: 'PORT',
     default: '8000'
+  },
+  dynamodb: {
+    region: {
+      doc: 'Dynamodb region',
+      format: String,
+      env: 'DYNAMODB_REGION',
+      default: 'eu-west-1'
+    },
+    endpoint: {
+      doc: 'Dynamodb Endpoint',
+      format: String,
+      env: 'DYNAMODB_ENDPOINT',
+      default: 'https://dynamodb.eu-west-1.amazonaws.com'
+    },
+    table: {
+      doc: 'Dynamodb table for messages',
+      format: String,
+      env: 'DYNAMODB_MESSAGE_TABLE',
+      default: '2k20-messages'
+    }
   }
 }) as Config
 

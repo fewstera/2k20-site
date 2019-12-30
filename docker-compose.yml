@@ -32,9 +32,10 @@ services:
       - ENV_NAME=local
       - LOG_LEVEL=debug
       - STATSD_ENABLED=false
-      - AWS_ACCESS_KEY_ID=local
-      - AWS_SECRET_ACCESS_KEY=local
-      - AWS_REGION=local
+      - AWS_ACCESS_KEY_ID=x
+      - AWS_SECRET_ACCESS_KEY=y
+      - AWS_REGION=eu-west-1
+      - DYNAMODB_ENDPOINT=http://dynamodb:8000
     volumes:
       - ./elasticsearch:/app/elasticsearch
       - ./Makefile:/app/Makefile
@@ -47,3 +48,10 @@ services:
       - ./server/scripts:/app/server/scripts
       - ./.eslintrc.json:/app/.eslintrc.json
     command: yarn --cwd ./server start
+    depends_on:
+      - dynamodb
+
+  dynamodb:
+    image: amazon/dynamodb-local
+    expose:
+      - 8000

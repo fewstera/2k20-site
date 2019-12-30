@@ -3,18 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --watch /app/server/src --signal SIGHUP -e ts,json,js -x 'ts-node --pretty /app/server/src/index.ts'",
+    "start": "./scripts/provision-dynamodb.sh && nodemon --watch ./src --signal SIGHUP -e ts,json,js -x 'ts-node --pretty ./src/index.ts'",
     "build": "tsc",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {
     "aws-sdk": "^2.502.0",
+    "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "convict": "^5.0.0",
     "express": "^4.17.1",
     "module-alias": "^2.2.0",
     "node-statsd": "^0.1.1",
     "unleash-client": "^3.2.6",
+    "uuid": "^3.3.3",
     "winston": "^3.2.1"
   },
   "devDependencies": {

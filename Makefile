@@ -41,8 +41,7 @@ docker-rebuild:
 # can be used to get a fresh database or when things have gone funky.
 .PHONY: docker-nuke
 docker-nuke:
-	docker-compose kill
-	docker-compose rm -f
+	docker-compose down
 
 # docker-yarn-install can be used to install dependencies in your already running container.
 # It's useful for when you have added a new dependency and already have the containers running
